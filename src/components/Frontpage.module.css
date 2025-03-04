@@ -1,0 +1,119 @@
+.container {
+  position: absolute;
+  top: 20%;
+  left: 30%;
+  width: 40%;
+  height: 65%;
+  background-image: url("../../public/paperBackground.jpg");
+  display: flex;
+}
+.logo {
+  position: absolute;
+  width: 100%;
+  height: 32%;
+  top: -27%;
+  color: white;
+}
+.details {
+  height: 100%;
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.characterContainer {
+  border: 2px solid black;
+  overflow: hidden;
+}
+.buttonContainer {
+  width: 50%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 5px;
+  gap: 10px;
+}
+.button {
+  width: 100%;
+  height: 60px;
+  border-radius: 10px;
+  font-size: 20px;
+  transition: background-color 0.2s ease;
+}
+.play {
+  background-color: lightgreen;
+}
+.play:hover {
+  background-color: rgb(123, 202, 123);
+}
+.private {
+  background-color: dodgerblue;
+}
+.private:hover {
+  background-color: rgb(28, 131, 234);
+}
+.slidingContainer {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.hatContainer {
+  justify-content: end;
+  align-items: end;
+}
+.avatarSlider {
+  width: 100px;
+  height: 140px;
+  display: flex;
+}
+.hatSlider {
+  width: 100px;
+  height: 120px;
+  display: flex;
+  justify-content: end;
+}
+.image {
+  flex-shrink: 0;
+  width: 100%;
+  height: 100%;
+  animation: idle-avatar 1.2s infinite;
+}
+.hatImage {
+  margin-top: 4px;
+  z-index: 4;
+}
+.hatImage.empty {
+  opacity: 0;
+}
+.arrow {
+  height: 30px;
+  width: 30px;
+  background-color: dodgerblue;
+  border-radius: 50%;
+  text-align: center;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.name {
+  margin-top: 10px;
+  width: 120px;
+  height: 30px;
+  font-size: 14px;
+}
+.error {
+  color: red;
+}
+@keyframes idle-avatar {
+  0% {
+    transform: translateY(0%);
+  }
+  50% {
+    transform: translateY(2%);
+  }
+  100% {
+    transform: translateY(0%);
+  }
+}

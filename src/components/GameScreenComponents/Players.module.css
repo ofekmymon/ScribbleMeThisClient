@@ -1,0 +1,80 @@
+.container {
+  height: 100%;
+  overflow-y: auto;
+}
+.playerContainer {
+  height: calc(100% / 5);
+  border-bottom: 1px solid black;
+  display: flex;
+}
+.playerDetails {
+  width: 50%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.detail {
+  height: 33.3%;
+  border-bottom: 1px solid #c7c7c7;
+  background-color: #e3e3e3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+.avatarContainer {
+  overflow: hidden;
+  position: relative;
+  height: 100%;
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  user-select: none;
+  background-color: transparent;
+}
+.avatarContainer > img {
+  -webkit-user-drag: none;
+  user-select: none;
+}
+
+.avatar {
+  -webkit-user-drag: none;
+  position: absolute;
+  bottom: 0;
+  height: 60%;
+  width: 100%;
+  z-index: 1;
+  object-fit: contain;
+}
+.hat {
+  -webkit-user-drag: none;
+  position: relative;
+  height: 50px;
+  width: 40px;
+  object-fit: contain;
+  z-index: 4;
+}
+.canvas {
+  position: absolute;
+  width: 50%;
+  height: 50%;
+  width: 30px;
+  object-fit: contain;
+  bottom: -3%;
+  left: 0;
+  z-index: 4;
+}
+.canvas.start {
+  animation: canvasPopUp 0.5s initial;
+}
+
+@keyframes canvasPopUp {
+  0% {
+    transform: translateY(100%);
+  }
+  100% {
+    transform: translateY(0%);
+  }
+}
