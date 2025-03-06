@@ -1,11 +1,13 @@
 import React, { useState, useRef, useEffect } from "react";
 import styles from "./Canvas.module.css";
-import { ReactSketchCanvas, eraseMode } from "react-sketch-canvas";
+import { ReactSketchCanvas } from "react-sketch-canvas";
 import { FaPaintBrush } from "react-icons/fa";
 import { FaEraser } from "react-icons/fa6";
 import { FaUndo } from "react-icons/fa";
 import { FaRedo } from "react-icons/fa";
 import { FaTrash } from "react-icons/fa";
+import { sendCanvas, useCanvas } from "../../hooks/useRooms";
+import { socket } from "../../socket";
 
 export default function Canvas({ youTurn }) {
   const [brushColor, setBrushColor] = useState("black");
@@ -14,6 +16,7 @@ export default function Canvas({ youTurn }) {
   const [brushValue, setBrushValue] = useState(4);
   const [eraserValue, setEraserValue] = useState(4);
   const canvasRef = useRef(null);
+  const drawing = useCanvas(); // the updated canvas
 
   function colorsGenerator() {
     const colorsList = [
@@ -40,40 +43,63 @@ export default function Canvas({ youTurn }) {
     });
   }
 
-  useEffect(() => {
-    const undoShortcut = (e) => {
-      if (e.ctrlKey && e.key === "z") {
-        try {
-          e.preventDefault();
-          canvasRef.current?.undo();
-        } catch (e) {
-          console.log(e);
-        }
-      }
-    };
-    // const redoShortcut = (e) => {
-    //   if (e.ctrlKey && e.key === "r") {
-    //     e.preventDefault();
-    //     canvasRef.current?.redo();
-    //   }
-    // };
-    window.addEventListener("keydown", undoShortcut);
-    // window.addEventListener("keydown", redoShortcut);
+  async function handleUndo() {
+    try {
+      await canvasRef.current.undo();
+      const drawing = await canvasRef.current.exportPaths();
+      socket.emit("update-canvas", drawing);
+    } catch (e) {
+      console.log(e);
+    }
+  }
+  async function handleRedo() {
+    try {
+      await canvasRef.current.redo();
+      const drawing = await canvasRef.current.exportPaths();
+      socket.emit("update-canvas", drawing);
+    } catch (e) {
+      console.log(e);
+    }
+  }
 
+  useEffect(() => {
+    // updates canvas
+    async function updateCanvas() {
+      if (drawing) {
+        await canvasRef.current.clearCanvas();
+        await canvasRef?.current.loadPaths(drawing);
+      }
+    }
+    if (!youTurn) {
+      updateCanvas();
+    }
+  }, [drawing, youTurn]);
+
+  useEffect(() => {
+    // listens for drawing actions.
+    socket.on("reset-canvas", () => {
+      if (canvasRef.current) {
+        canvasRef.current.clearCanvas();
+      }
+    });
     return () => {
-      window.removeEventListener("keydown", undoShortcut);
-      // window.removeEventListener("keydown", redoShortcut);
+      socket.off("reset-canvas");
     };
-  }, []);
+  }, [canvasRef]);
 
   return (
     <div className={styles.container}>
       <ReactSketchCanvas
         ref={canvasRef}
-        strokeWidth={!youTurn ? 0 : brushValue}
+        strokeWidth={!youTurn || isUndoing ? 0 : brushValue} //disable strokes if its not your turn
         eraserWidth={eraserValue}
         strokeColor={brushColor}
         className={styles.canvas}
+        onStroke={async () => {
+          if (youTurn) {
+            sendCanvas(await canvasRef.current.exportPaths());
+          }
+        }}
       />
       {/* only render tools if its your turn */}
       {youTurn ? (
@@ -84,9 +110,7 @@ export default function Canvas({ youTurn }) {
                 Clear
                 <button
                   className={styles.buttonContainer}
-                  onClick={() => {
-                    canvasRef.current?.clearCanvas();
-                  }}
+                  onClick={() => socket.emit("clear-canvas")}
                 >
                   <FaTrash className={styles.icon} />
                 </button>
@@ -143,8 +167,8 @@ export default function Canvas({ youTurn }) {
               <button className={styles.buttonContainer}>
                 <FaUndo
                   className={styles.icon}
-                  onClick={() => {
-                    canvasRef.current?.undo();
+                  onClick={async () => {
+                    await handleUndo();
                   }}
                 />
               </button>
@@ -153,8 +177,8 @@ export default function Canvas({ youTurn }) {
               <p className={styles.buttonText}>Redo</p>
               <button
                 className={styles.buttonContainer}
-                onClick={() => {
-                  canvasRef.current?.redo();
+                onClick={async () => {
+                  await handleRedo();
                 }}
               >
                 <FaRedo className={styles.icon} />

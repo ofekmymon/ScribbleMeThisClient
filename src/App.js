@@ -6,7 +6,6 @@ import { useState, useEffect } from "react";
 function App() {
   const [isConnected, setIsConnected] = useState(socket.connected);
   const [isInRoom, setIsInRoom] = useState(socket.rooms?.length > 0);
-  const [currentRoom, setCurrentRoom] = useState(null);
   useEffect(() => {
     function onConnect() {
       setIsConnected(true);
@@ -16,9 +15,8 @@ function App() {
       setIsConnected(false);
     }
 
-    function onJoinRoom(room) {
+    function onJoinRoom() {
       setIsInRoom(true);
-      setCurrentRoom(room);
     }
 
     function onLeaveRoom() {
@@ -27,8 +25,8 @@ function App() {
 
     socket.on("connect", onConnect);
     socket.on("disconnect", onDisconnect);
-    socket.on("joined-room", (room) => {
-      onJoinRoom(room);
+    socket.on("joined-room", () => {
+      onJoinRoom();
     });
     socket.on("leave-room", onLeaveRoom);
 
@@ -41,7 +39,7 @@ function App() {
   }, []);
 
   function handleStates() {
-    if (isInRoom && currentRoom) {
+    if (isInRoom) {
       return <GameScreen />;
     }
     return <Frontpage />;

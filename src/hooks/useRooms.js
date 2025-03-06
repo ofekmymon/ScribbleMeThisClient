@@ -10,7 +10,6 @@ export function useRooms() {
 
   useEffect(() => {
     //listens for changes in room
-
     // sets the room for the first time
     socket.emit("get-room");
 
@@ -22,7 +21,6 @@ export function useRooms() {
     };
   }, []);
   console.log(currentRoom);
-
   return { currentRoom };
 }
 export function useTurnEnded() {
@@ -45,17 +43,26 @@ export function useTurnEnded() {
   return turnEnded;
 }
 
-// export function usePlayers() {
-//   const [players, setPlayers] = useState([]);
+export function sendCanvas(data) {
+  // sends to server current drawing path
+  socket.emit("update-canvas", data);
+}
 
-//   useEffect(() => {
-//     socket.on("update-players", (players) => {
-//       setPlayers(players);
-//     });
+export function useCanvas() {
+  //gets the current drawing path from server
+  const [drawing, setDrawing] = useState(undefined);
 
-//     return () => {
-//       socket.off("update-players");
-//     };
-//   });
-//   return players;
-// }
+  useEffect(() => {
+    socket.emit("get-drawing");
+
+    socket.on("update-drawing", (data) => {
+      console.log(data);
+      setDrawing(data);
+    });
+    return () => {
+      socket.off("update-drawing");
+    };
+  }, []);
+
+  return drawing;
+}
