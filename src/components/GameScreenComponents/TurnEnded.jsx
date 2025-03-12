@@ -12,6 +12,7 @@ export default function TurnEnded({ wordChosen }) {
     socket.once("player-scores", (scores) => {
       setPlayers(scores);
     });
+    return () => socket.off("player-scores");
   }, []);
 
   useEffect(() => {
@@ -69,7 +70,7 @@ export default function TurnEnded({ wordChosen }) {
                 <div className={styles.details}>
                   <div> +{player.newScore}</div>
                   <div>Total Score: {player.score}</div>
-                  <div>New Ranking: 4#</div>
+                  <div>New Ranking: {player.rank}#</div>
                 </div>
               </div>
             ))

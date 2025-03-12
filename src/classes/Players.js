@@ -5,6 +5,8 @@ export default class Player {
     this.avatar = avatar;
     this.hat = hat;
     this.score = 0;
+    this.newScore = 0;
+    this.rank = "NAN";
     this.didGuess = false;
   }
 }

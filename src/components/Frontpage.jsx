@@ -4,15 +4,26 @@ import styles from "./Frontpage.module.css";
 import { getAllAvatars, getAllHats } from "../hooks/useAvatars";
 import { useEffect, useState } from "react";
 import Player from "../classes/Players";
-import { enterQuickPlay } from "../hooks/useRooms";
+import { enterQuickPlay, createPrivate, joinPrivate } from "../hooks/useRooms";
 import { socket } from "../socket";
 const SERVER_URL = process.env.REACT_APP_SERVER_URL;
 
 export default function Frontpage() {
   const [avatar, setAvatar] = useState("");
   const [hat, setHat] = useState("");
-  const [name, setName] = useState("");
+  const [name, setName] = useState("fish");
   const [error, setError] = useState("");
+  const [joinCode, setJoinCode] = useState("");
+  const [joinError, setJoinError] = useState("");
+
+  useEffect(() => {
+    // handles errors from trying to join private server
+    socket.on("throw-frontpage-error", (error) => {
+      setJoinError(error);
+    });
+
+    return () => socket.off("throw-frontpage-error");
+  }, []);
 
   async function handleQuickPlay() {
     // sends a request to the server to connect the player to the socket, and find/create him a room.
@@ -20,6 +31,29 @@ export default function Frontpage() {
     const flag = nameValidator();
     if (flag) {
       enterQuickPlay(player);
+    }
+  }
+
+  async function handlePrivate() {
+    // sends a request to the server to connect the player to the socket, and create a private room.
+    const player = new Player(socket.id, name, avatar, hat);
+    const flag = nameValidator();
+    if (flag) {
+      createPrivate(player);
+    }
+  }
+
+  async function handleJoining() {
+    if (joinCode.length !== 8) {
+      setJoinError("Invalid Code");
+      return;
+    }
+    const player = new Player(socket.id, name, avatar, hat);
+    const flag = nameValidator();
+    if (flag) {
+      console.log(joinCode);
+
+      joinPrivate(player, joinCode);
     }
   }
 
@@ -47,6 +81,7 @@ export default function Frontpage() {
           className={styles.name}
           placeholder="Name"
           maxLength={15}
+          value={name}
           onChange={(e) => setName(e.target.value)}
         />
       </div>
@@ -57,9 +92,30 @@ export default function Frontpage() {
         >
           Play
         </button>
-        <button className={`${styles.button} ${styles.private}`}>
+        <button
+          className={`${styles.button} ${styles.private}`}
+          onClick={handlePrivate}
+        >
           Private Room
         </button>
+        <div className={styles.joinContainer}>
+          {joinError.length > 0 ? (
+            <div className={styles.error}>{joinError}</div>
+          ) : (
+            ""
+          )}
+          <input
+            type="text"
+            maxLength={8}
+            className={styles.input}
+            placeholder="Enter code"
+            value={joinCode}
+            onChange={(e) => setJoinCode(e.target.value)}
+          />
+          <button className={styles.codeButton} onClick={() => handleJoining()}>
+            Join Private
+          </button>
+        </div>
       </div>
     </div>
   );

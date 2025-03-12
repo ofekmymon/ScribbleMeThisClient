@@ -31,6 +31,13 @@
   font-size: 25px;
   height: 60px;
 }
+.status {
+  height: 100%;
+  font-size: 120%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .roundsContainer {
   width: 18%;
   height: 100%;

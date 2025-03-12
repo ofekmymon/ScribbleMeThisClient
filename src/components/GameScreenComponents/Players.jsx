@@ -21,7 +21,7 @@ const Player = ({ player, youTurn }) => {
       <div className={styles.playerDetails}>
         <div className={styles.detail}>{player.name}</div>
         <div className={styles.detail}>Score:{player.score}</div>
-        <div className={styles.detail}>#2</div>
+        <div className={styles.detail}>{player.rank}#</div>
       </div>
       <div className={styles.avatarContainer}>
         {player.hat !== "empty" ? (

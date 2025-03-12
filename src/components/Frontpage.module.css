@@ -42,6 +42,20 @@
   font-size: 20px;
   transition: background-color 0.2s ease;
 }
+.joinContainer {
+  display: flex;
+  width: 100%;
+  align-items: end;
+  justify-content: end;
+  gap: 5px;
+}
+.input {
+  width: 30%;
+}
+.codeButton {
+  background-color: dodgerblue;
+  border-radius: 5px;
+}
 .play {
   background-color: lightgreen;
 }

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useEffect } from "react";
 import styles from "./GameScreen.module.css";
 import Players from "./GameScreenComponents/Players";
 import Chat from "./GameScreenComponents/Chat";
@@ -7,21 +7,27 @@ import WordToGuess from "./GameScreenComponents/WordToGuess";
 import Canvas from "./GameScreenComponents/Canvas";
 import Words from "./GameScreenComponents/Words";
 import TurnEnded from "./GameScreenComponents/TurnEnded";
-import { useRooms, useTurnEnded } from "../hooks/useRooms";
+import EndSession from "./GameScreenComponents/EndSession";
+import SetSettings from "./GameScreenComponents/SetSettings";
+import { useRooms, useTurnEnded, useSessionEnded } from "../hooks/useRooms";
 import { socket } from "../socket";
 
-export default function GameScreen({}) {
-  const { currentRoom } = useRooms();
+export default function GameScreen() {
+  const currentRoom = useRooms();
   const turnEnded = useTurnEnded();
+  const sessionEnded = useSessionEnded();
+
+  useEffect(() => {
+    socket.emit("player-joined");
+  }, []);
 
   if (!currentRoom) return <p>Loading room...</p>;
+
   // some important values
   const youTurn =
     socket.id === currentRoom.players[0].id && currentRoom.players.length > 1; // checks if its this clients turn
   const wordChosen = currentRoom.wordChosen;
-  const didGuess = currentRoom.guessers.some(
-    (player) => player.id === socket.id
-  );
+  const didGuess = currentRoom.guessers.some((id) => id === socket.id);
 
   return (
     <div className={styles.container}>
@@ -42,11 +48,17 @@ export default function GameScreen({}) {
         </div>
         <div className={styles.wordsContainer}>
           {/* Alternates between status of game and the word to guess */}
-          <WordToGuess
-            word={wordChosen}
-            youTurn={youTurn}
-            didGuess={didGuess}
-          />
+          {!wordChosen && !turnEnded && !sessionEnded ? (
+            <div className={styles.status}>
+              {`${currentRoom.players[0].name} is choosing a word!`}{" "}
+            </div>
+          ) : (
+            <WordToGuess
+              word={wordChosen}
+              youTurn={youTurn}
+              didGuess={didGuess}
+            />
+          )}
         </div>
       </div>
       <div className={styles.gameWrap}>
@@ -54,9 +66,16 @@ export default function GameScreen({}) {
           <Players players={currentRoom.players} />
         </div>
         <div className={styles.canvasContainer}>
-          {/* Displays either the canvas or the screen where you choose the word from */}
-          {turnEnded ? (
+          {/* Displays the current state of the game */}
+          {currentRoom.state === "private/settings" ? (
+            <SetSettings
+              owner={currentRoom.owner === socket.id}
+              room={currentRoom}
+            />
+          ) : turnEnded ? (
             <TurnEnded wordChosen={wordChosen} />
+          ) : sessionEnded ? (
+            <EndSession />
           ) : youTurn && !wordChosen ? (
             <Words numberOfOptions={currentRoom.wordsOptionNumber} />
           ) : (

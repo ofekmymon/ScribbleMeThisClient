@@ -5,6 +5,15 @@ import { socket } from "../socket";
 export function enterQuickPlay(player) {
   socket.emit("quick-play", player);
 }
+
+export function createPrivate(player) {
+  socket.emit("create-private", player);
+}
+
+export function joinPrivate(player, code) {
+  socket.emit("request-to-join", player, code);
+}
+
 export function useRooms() {
   const [currentRoom, setCurrentRoom] = useState(null);
 
@@ -15,13 +24,13 @@ export function useRooms() {
 
     socket.on("room-update", (room) => {
       setCurrentRoom(room);
+      console.log("room updated");
     });
     return () => {
       socket.off("room-update");
     };
   }, []);
-  console.log(currentRoom);
-  return { currentRoom };
+  return currentRoom;
 }
 export function useTurnEnded() {
   const [turnEnded, setTurnEnded] = useState(false);
@@ -30,17 +39,37 @@ export function useTurnEnded() {
     socket.on("turn-ended", () => {
       setTurnEnded(true);
     });
-    socket.on("change-turn", () => {
+    socket.on("continue-game", () => {
       setTurnEnded(false);
     });
 
     return () => {
       socket.off("turn-ended");
-      socket.off("change-turn");
+      socket.off("continue-game");
     };
   }, []);
 
   return turnEnded;
+}
+
+export function useSessionEnded() {
+  const [sessionEnded, setSessionEnded] = useState(false);
+
+  useEffect(() => {
+    socket.on("end-session", () => {
+      setSessionEnded(true);
+    });
+    socket.on("continue-game", () => {
+      setSessionEnded(false);
+    });
+
+    return () => {
+      socket.off("session-ended");
+      socket.off("continue-game");
+    };
+  }, []);
+
+  return sessionEnded;
 }
 
 export function sendCanvas(data) {
@@ -56,7 +85,6 @@ export function useCanvas() {
     socket.emit("get-drawing");
 
     socket.on("update-drawing", (data) => {
-      console.log(data);
       setDrawing(data);
     });
     return () => {

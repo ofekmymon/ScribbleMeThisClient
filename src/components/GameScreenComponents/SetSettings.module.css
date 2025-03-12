@@ -1,0 +1,33 @@
+.container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+}
+.optionContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+  height: 70%;
+}
+.option {
+  font-size: 130%;
+}
+.button {
+  width: 20%;
+  height: 7%;
+  background-color: dodgerblue;
+  margin-bottom: 10px;
+  transition: all 0.2s ease;
+}
+.button:hover {
+  background-color: rgb(29, 129, 230);
+}
+.button:active {
+  font-size: 70%;
+}

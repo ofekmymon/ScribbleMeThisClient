@@ -17,6 +17,7 @@ function App() {
 
     function onJoinRoom() {
       setIsInRoom(true);
+      // socket.emit("player-joined");
     }
 
     function onLeaveRoom() {

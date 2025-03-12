@@ -1,18 +1,26 @@
-import axios from "axios";
+import { useState, useEffect } from "react";
 import { socket } from "../socket";
-const SERVER_URL = process.env.REACT_APP_SERVER_URL;
 
-export async function getWords(numberOfWords) {
-  const request = await axios.post(`${SERVER_URL}/api/get-words`, {
-    numberOfWords,
-  });
-  const response = await request.data;
-  console.log(response);
+export function useWords() {
+  const [words, setWords] = useState([]);
+  useEffect(() => {
+    socket.emit("get-words");
+    socket.once("word-options", (words) => setWords(words));
+    return () => socket.off("word-options");
+  }, []);
+  return words;
+}
 
-  if (response.status === "success") {
-    return response.words;
-  }
-  throw request.message;
+export function useTimer() {
+  const [timer, setTimer] = useState("-");
+  useEffect(() => {
+    socket.on("update-countdown", (countdown) => {
+      setTimer(countdown);
+    });
+    return () => socket.off("update-countdown");
+  }, []);
+
+  return timer;
 }
 
 export function wordChosen(word) {

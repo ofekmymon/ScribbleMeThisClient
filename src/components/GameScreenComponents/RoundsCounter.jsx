@@ -7,7 +7,8 @@ export default function RoundsCounter({ round, rounds }) {
     <div className={styles.container}>
       <div className={styles.timer}>{timer}'s</div>
       <div className={styles.rounds}>
-        Rounds: {round}/{rounds}
+        {/* make sure the round doesnt go past rounds. */}
+        Rounds: {round > rounds ? rounds : round}/{rounds}
       </div>
     </div>
   );

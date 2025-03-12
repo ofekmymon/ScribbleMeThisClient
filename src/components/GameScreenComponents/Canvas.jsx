@@ -91,7 +91,7 @@ export default function Canvas({ youTurn }) {
     <div className={styles.container}>
       <ReactSketchCanvas
         ref={canvasRef}
-        strokeWidth={!youTurn || isUndoing ? 0 : brushValue} //disable strokes if its not your turn
+        strokeWidth={!youTurn ? 0 : brushValue} //disable strokes if its not your turn
         eraserWidth={eraserValue}
         strokeColor={brushColor}
         className={styles.canvas}
