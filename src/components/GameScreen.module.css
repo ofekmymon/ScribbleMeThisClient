@@ -74,14 +74,14 @@
 
 @media (max-width: 768px) {
   body {
-    overflow-y: hidden;
+    overflow: hidden; /* Prevent scrolling */
   }
   .container {
-    overflow-y: scroll;
+    overflow: hidden; /* Prevent scrolling */
     position: static;
     display: flex;
     width: 100%;
-    height: 100%;
+    height: 100vh; /* Adjust height to fit viewport */
     border-radius: 0;
   }
   .status {
@@ -93,45 +93,44 @@
   }
   .notification {
     font-size: 20px;
+    height: 40px;
+    border-radius: 0;
   }
   .roundsContainer {
     width: 30%;
     background-color: dodgerblue;
   }
-
   .gameWrap {
     position: relative;
     flex-direction: column;
     flex-wrap: wrap;
-    height: 100%;
+    height: calc(100vh - 40px); /* Adjust height to fit within viewport */
   }
-
   .canvasContainer {
     width: 100%;
-    height: 54%;
+    height: 52%;
     order: 1;
     flex-shrink: 0;
     border: 1px solid black;
+    z-index: 100;
   }
-
   .players {
     position: absolute;
-    width: 40%;
-    height: 46%;
+    width: 45%;
+    height: 40%;
     border: 1px solid black;
     order: 2;
     flex-shrink: 1;
-    bottom: 0;
+    bottom: 8%;
     left: 0;
   }
-
   .chat {
     position: absolute;
-    width: 60%;
-    height: 46%;
+    width: 55%;
+    height: 40%;
     order: 3;
     flex-shrink: 1;
-    bottom: 0;
+    bottom: 8%;
     right: 0;
   }
 }

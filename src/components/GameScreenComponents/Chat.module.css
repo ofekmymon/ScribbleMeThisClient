@@ -58,4 +58,23 @@
   padding: 5px;
   margin: 5px;
   border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+@media (max-width: 768px) {
+  .messageContainer {
+    min-height: 30px;
+    font-size: 10px;
+  }
+  .messageContent {
+    font-size: 10px;
+  }
+  .notification {
+    font-size: 11px;
+    min-height: 20px;
+  }
+  .input {
+    height: 75%;
+  }
 }

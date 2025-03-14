@@ -88,10 +88,13 @@
 
 @media (max-width: 768px) {
   .hat {
-    height: 30px;
-    bottom: 3px;
+    height: 20px;
+    top: 4px;
   }
   .detail {
     font-size: 60%;
+  }
+  .playerContainer {
+    margin-top: 1px;
   }
 }

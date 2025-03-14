@@ -116,7 +116,7 @@ export default function SetSettings({ owner, room }) {
           </select>
         </div>
       </div>
-      <button onClick={startRoom} className={styles.button}>
+      <button onClick={startRoom} className={styles.button} disabled={!owner}>
         Start Game
       </button>
     </div>

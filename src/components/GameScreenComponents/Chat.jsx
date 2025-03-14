@@ -39,7 +39,7 @@ export default function Chat() {
           onChange={(e) => {
             setMessageToSend(e.target.value);
           }}
-          placeholder="Enter your message"
+          placeholder="Enter your guess here"
           onKeyDown={(e) => {
             if (e.key === "Enter") {
               handleSendingMessage();

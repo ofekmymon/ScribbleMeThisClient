@@ -31,3 +31,8 @@
 .button:active {
   font-size: 70%;
 }
+@media (max-width: 768px) {
+  .button {
+    font-size: 10px;
+  }
+}
