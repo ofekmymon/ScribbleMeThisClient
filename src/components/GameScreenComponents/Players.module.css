@@ -2,6 +2,9 @@
   height: 100%;
   overflow-y: auto;
 }
+.container.you {
+  background-color: aquamarine;
+}
 .playerContainer {
   height: calc(100% / 5);
   border-bottom: 1px solid black;
@@ -22,6 +25,7 @@
   align-items: center;
   justify-content: center;
   text-align: center;
+  font-size: 80%;
 }
 .avatarContainer {
   overflow: hidden;
@@ -33,6 +37,9 @@
   align-items: center;
   user-select: none;
   background-color: transparent;
+}
+.avatarContainer.you {
+  background-color: aquamarine;
 }
 .avatarContainer > img {
   -webkit-user-drag: none;
@@ -76,5 +83,15 @@
   }
   100% {
     transform: translateY(0%);
+  }
+}
+
+@media (max-width: 768px) {
+  .hat {
+    height: 30px;
+    bottom: 3px;
+  }
+  .detail {
+    font-size: 60%;
   }
 }

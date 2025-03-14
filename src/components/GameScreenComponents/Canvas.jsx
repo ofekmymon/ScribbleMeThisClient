@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import styles from "./Canvas.module.css";
-import { ReactSketchCanvas } from "react-sketch-canvas";
+import { ReactSketchCanvas } from "@xjamundx/react-sketch-canvas";
 import { FaPaintBrush } from "react-icons/fa";
 import { FaEraser } from "react-icons/fa6";
 import { FaUndo } from "react-icons/fa";
@@ -91,9 +91,14 @@ export default function Canvas({ youTurn }) {
     <div className={styles.container}>
       <ReactSketchCanvas
         ref={canvasRef}
-        strokeWidth={!youTurn ? 0 : brushValue} //disable strokes if its not your turn
+        strokeWidth={brushValue}
         eraserWidth={eraserValue}
         strokeColor={brushColor}
+        withViewBox={true}
+        viewBoxHeight={500}
+        viewBoxWidth={500}
+        height="100%"
+        readOnly={!youTurn} //disable if its not your turn
         className={styles.canvas}
         onStroke={async () => {
           if (youTurn) {

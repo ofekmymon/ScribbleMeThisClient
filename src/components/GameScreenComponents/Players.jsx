@@ -1,12 +1,13 @@
 import React from "react";
 import styles from "./Players.module.css";
 const SERVER_URL = process.env.REACT_APP_SERVER_URL;
-export default function Players({ players }) {
+export default function Players({ players, playerId }) {
   return (
     <div className={styles.container}>
       {players?.map((player) => (
         <Player
           player={player}
+          you={player.id === playerId}
           youTurn={players[0].id === player.id && players.length > 1}
           key={player.id}
         />
@@ -15,15 +16,15 @@ export default function Players({ players }) {
   );
 }
 
-const Player = ({ player, youTurn }) => {
+const Player = ({ player, youTurn, you }) => {
   return (
-    <div className={styles.playerContainer}>
+    <div className={`${styles.playerContainer}`}>
       <div className={styles.playerDetails}>
         <div className={styles.detail}>{player.name}</div>
         <div className={styles.detail}>Score:{player.score}</div>
         <div className={styles.detail}>{player.rank}#</div>
       </div>
-      <div className={styles.avatarContainer}>
+      <div className={`${styles.avatarContainer} ${you ? styles.you : ""}`}>
         {player.hat !== "empty" ? (
           <img
             className={styles.hat}

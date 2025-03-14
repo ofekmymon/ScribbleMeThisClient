@@ -5,3 +5,10 @@
   height: 100vh;
   background-image: url("../public/mainBackground.jpg");
 }
+
+@media (max-width: 768px) {
+  body,
+  html {
+    height: 40vh;
+  }
+}

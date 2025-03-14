@@ -8,8 +8,10 @@
   align-items: center;
 }
 .title {
+  width: 100%;
   font-size: 40px;
   color: white;
+  text-align: center;
 }
 .wordContainer {
   width: 100%;
@@ -27,4 +29,6 @@
   justify-content: center;
   height: 40px;
   color: white;
+}
+@media (max-width: 768px) {
 }

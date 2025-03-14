@@ -9,3 +9,15 @@
 .timer {
   font-size: large;
 }
+@media screen {
+  .container {
+    flex-direction: row;
+    gap: 10px;
+  }
+  .rounds {
+    font-size: small;
+  }
+  .timer {
+    font-size: small;
+  }
+}

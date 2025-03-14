@@ -7,3 +7,8 @@
   text-align: center;
   font-size: 30px;
 }
+@media (max-width: 768px) {
+  .container {
+    font-size: 25px;
+  }
+}

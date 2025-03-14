@@ -6,12 +6,13 @@ import { useEffect, useState } from "react";
 import Player from "../classes/Players";
 import { enterQuickPlay, createPrivate, joinPrivate } from "../hooks/useRooms";
 import { socket } from "../socket";
+import { randomName } from "../randomNames";
 const SERVER_URL = process.env.REACT_APP_SERVER_URL;
 
 export default function Frontpage() {
   const [avatar, setAvatar] = useState("");
   const [hat, setHat] = useState("");
-  const [name, setName] = useState("fish");
+  const [name, setName] = useState(randomName);
   const [error, setError] = useState("");
   const [joinCode, setJoinCode] = useState("");
   const [joinError, setJoinError] = useState("");

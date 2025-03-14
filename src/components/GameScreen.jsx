@@ -16,6 +16,7 @@ export default function GameScreen() {
   const currentRoom = useRooms();
   const turnEnded = useTurnEnded();
   const sessionEnded = useSessionEnded();
+  console.log(currentRoom);
 
   useEffect(() => {
     socket.emit("player-joined");
@@ -63,7 +64,7 @@ export default function GameScreen() {
       </div>
       <div className={styles.gameWrap}>
         <div className={styles.players}>
-          <Players players={currentRoom.players} />
+          <Players players={currentRoom.players} playerId={socket.id} />
         </div>
         <div className={styles.canvasContainer}>
           {/* Displays the current state of the game */}

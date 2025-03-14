@@ -1,23 +1,18 @@
 .container {
+  position: relative;
   width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-}
-.canvas {
-  width: 100%;
-  height: 70%;
-  border: 1px solid black;
 }
 .tools {
-  position: relative;
+  position: absolute;
   display: flex;
   width: 100%;
-  height: 30%;
+  height: 20%;
+  bottom: 0;
   background-color: dodgerblue;
-  border-top: 1px solid black;
+  border: 1px solid black;
 }
 .colorsAndTrash {
   width: 80%;
@@ -39,11 +34,10 @@
   gap: 5px;
   width: 100%;
   height: 10px;
-  flex-wrap: wrap;
 }
 .color {
-  width: 20px;
-  height: 20px;
+  width: 15px;
+  height: 15px;
   border: 1px solid black;
   cursor: pointer;
 }
@@ -52,7 +46,6 @@
   width: 40%;
   margin: 5px;
   display: flex;
-  flex-wrap: wrap;
   justify-content: space-around;
   align-items: center;
 }
@@ -102,4 +95,28 @@
 }
 .buttonText {
   margin: 0;
+}
+@media (max-width: 768px) {
+  .colorsAndTrash {
+    margin-top: 5px;
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .customColor {
+    width: 15%;
+  }
+  .buttonWrapper {
+    font-size: 10px;
+  }
+  .buttonContainer {
+    width: 20px;
+    height: 20px;
+  }
+  .icon {
+    width: 10px;
+  }
+  .color {
+    width: 5%;
+    height: 10px;
+  }
 }

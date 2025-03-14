@@ -131,3 +131,32 @@
     transform: translateY(0%);
   }
 }
+
+@media (max-width: 768px) {
+  body {
+    overflow: hidden;
+  }
+  .container {
+    position: relative;
+    left: 0;
+    width: 100%;
+    margin: 0;
+  }
+  .logo {
+    top: -25%;
+    height: 25%;
+    margin: 0;
+  }
+  .joinContainer {
+    flex-direction: column;
+    align-items: center;
+  }
+  .input {
+    width: 90%;
+    text-align: center;
+  }
+  .codeButton {
+    background-color: dodgerblue;
+    border-radius: 5px;
+  }
+}

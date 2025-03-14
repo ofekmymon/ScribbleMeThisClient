@@ -17,15 +17,21 @@ export default function SetSettings({ owner, room }) {
       setMaxPlayers(room.maxPlayers ?? 8);
       setMaxRounds(room.rounds ?? 3);
       setTurnTime(room.turnTime ?? 120);
-      setWordOptions(room.wordOptionsNumber ?? 3);
+      setWordOptions(room.wordsOptionNumber ?? 3);
     }
   }, [room]); // Runs whenever `room` updates
 
   useEffect(() => {
     if (owner) {
-      handleUpdate();
+      const values = {
+        maxPlayers: parseInt(maxPlayers),
+        maxRounds: parseInt(maxRounds),
+        turnTime: parseInt(turnTime),
+        wordOptions: parseInt(wordOptions),
+      };
+      socket.emit("update-private-room", values);
     }
-  }, [handleUpdate, maxPlayers, maxRounds, turnTime, wordOptions, owner]);
+  }, [maxPlayers, maxRounds, turnTime, wordOptions, owner]);
 
   function handleUpdate() {
     const values = {
@@ -80,10 +86,7 @@ export default function SetSettings({ owner, room }) {
         <div className={styles.option}>
           Turn Time (in seconds):{" "}
           <select
-            type="number"
             value={turnTime}
-            min={60}
-            max={300}
             disabled={!owner}
             onChange={(e) => {
               setTurnTime(e.target.value);
@@ -97,7 +100,7 @@ export default function SetSettings({ owner, room }) {
           </select>
         </div>
         <div className={styles.option}>
-          Number of options to draw:{" "}
+          Number of options:{" "}
           <select
             value={wordOptions}
             disabled={!owner}
