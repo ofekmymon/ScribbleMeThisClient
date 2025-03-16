@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import styles from "./Chat.module.css";
 import { useState } from "react";
 import { socket } from "../../socket";
@@ -6,6 +6,7 @@ import { socket } from "../../socket";
 export default function Chat() {
   const [messageToSend, setMessageToSend] = useState("");
   const [messages, setMessages] = useState([]);
+  const chatRef = useRef(null);
 
   function handleSendingMessage() {
     if (messageToSend.trim().length >= 1) {
@@ -31,9 +32,26 @@ export default function Chat() {
     return () => socket.off("get-message");
   }, []);
 
+  useEffect(() => {
+    const chat = chatRef.current;
+    console.log("chatRef.current is not null");
+
+    if (!chat) {
+      console.log("chatRef.current is null");
+      return;
+    }
+    const isBottom =
+      chat.scrollHeight - chat.clientHeight <= chat.scrollTop + 150;
+    console.log(isBottom);
+
+    if (isBottom) {
+      chat.scrollTop = chat.scrollHeight;
+    }
+  }, [messages]);
+
   return (
     <div className={styles.container}>
-      <div className={styles.chat}>
+      <div className={styles.chat} ref={chatRef}>
         {messages.map((message, i) => (
           <Message message={message} key={i} />
         ))}
