@@ -95,9 +95,10 @@ export default function Canvas({ youTurn }) {
         eraserWidth={eraserValue}
         strokeColor={brushColor}
         withViewBox={true}
-        viewBoxHeight={500}
-        viewBoxWidth={500}
+        viewBoxHeight={1000}
+        viewBoxWidth={1000}
         height="100%"
+        width="100%"
         readOnly={!youTurn} //disable if its not your turn
         className={styles.canvas}
         onStroke={async () => {

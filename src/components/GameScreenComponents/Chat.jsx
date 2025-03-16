@@ -15,9 +15,17 @@ export default function Chat() {
   }
 
   useEffect(() => {
+    const audio = new Audio("./correctGuess.wav");
+
     socket.on("get-message", (newMessage) => {
       // listens for new messages and updates the state
       setMessages((prev) => [...prev, newMessage]);
+      if (
+        newMessage.type === "notification" &&
+        newMessage.content === "Has Guessed The Word"
+      ) {
+        audio.play();
+      }
     });
 
     return () => socket.off("get-message");
