@@ -95,8 +95,8 @@ export default function Canvas({ youTurn }) {
         eraserWidth={eraserValue}
         strokeColor={brushColor}
         withViewBox={true}
-        viewBoxHeight={800}
-        viewBoxWidth={800}
+        viewBoxHeight={2000}
+        viewBoxWidth={2000}
         height="100%"
         width="100%"
         readOnly={!youTurn} //disable if its not your turn
