@@ -97,9 +97,8 @@ export default function Canvas({ youTurn }) {
         withViewBox={true}
         viewBoxHeight={1500}
         viewBoxWidth={1500}
-        height="100%"
-        width="100%"
-        readOnly={!youTurn} //disable if its not your turn
+        height="80vh" // Use viewport height
+        width="80vh" // Use viewport width
         className={styles.canvas}
         onStroke={async () => {
           if (youTurn) {
