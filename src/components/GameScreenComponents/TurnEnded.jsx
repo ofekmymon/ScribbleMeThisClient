@@ -49,7 +49,7 @@ export default function TurnEnded({ wordChosen }) {
       <div className={styles.playerList}>
         {players
           ? players.map((player) => (
-              <div className={styles.playerContainer}>
+              <div className={styles.playerContainer} key={player.id}>
                 <div className={styles.avatarContainer}>
                   {/* for case that has is empty */}
                   {player.hat !== "empty" ? (

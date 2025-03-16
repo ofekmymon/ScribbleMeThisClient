@@ -6,8 +6,9 @@ export default function SetSettings({ owner, room }) {
   // Local state for form values
   const [maxPlayers, setMaxPlayers] = useState(8);
   const [maxRounds, setMaxRounds] = useState(3);
-  const [turnTime, setTurnTime] = useState(120);
+  const [turnTime, setTurnTime] = useState(70);
   const [wordOptions, setWordOptions] = useState(3);
+  const [HintsNumber, setHintsNumber] = useState(2);
 
   // Sync local state with `room` whenever `room` updates
   useEffect(() => {
@@ -18,6 +19,7 @@ export default function SetSettings({ owner, room }) {
       setMaxRounds(room.rounds ?? 3);
       setTurnTime(room.turnTime ?? 120);
       setWordOptions(room.wordsOptionNumber ?? 3);
+      setHintsNumber(room.numberOfHints ?? 2);
     }
   }, [room]); // Runs whenever `room` updates
 
@@ -28,10 +30,11 @@ export default function SetSettings({ owner, room }) {
         maxRounds: parseInt(maxRounds),
         turnTime: parseInt(turnTime),
         wordOptions: parseInt(wordOptions),
+        hintsNumber: parseInt(HintsNumber),
       };
       socket.emit("update-private-room", values);
     }
-  }, [maxPlayers, maxRounds, turnTime, wordOptions, owner]);
+  }, [maxPlayers, maxRounds, turnTime, wordOptions, HintsNumber, owner]);
 
   function handleUpdate() {
     const values = {
@@ -39,6 +42,7 @@ export default function SetSettings({ owner, room }) {
       maxRounds: parseInt(maxRounds),
       turnTime: parseInt(turnTime),
       wordOptions: parseInt(wordOptions),
+      hintsNumber: parseInt(HintsNumber),
     };
     socket.emit("update-private-room", values);
   }
@@ -109,6 +113,22 @@ export default function SetSettings({ owner, room }) {
             }}
           >
             {Array.from({ length: 5 }, (_, i) => (
+              <option value={i + 1} key={i}>
+                {i + 1}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className={styles.option}>
+          Number of hints:{" "}
+          <select
+            value={HintsNumber}
+            disabled={!owner}
+            onChange={(e) => {
+              setHintsNumber(e.target.value);
+            }}
+          >
+            {Array.from({ length: 6 }, (_, i) => (
               <option value={i + 1} key={i}>
                 {i + 1}
               </option>

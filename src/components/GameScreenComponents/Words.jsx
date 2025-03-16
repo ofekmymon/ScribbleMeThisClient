@@ -4,7 +4,6 @@ import { useWords, wordChosen, useTimer } from "../../hooks/useWords";
 export default function Words({ numberOfOptions }) {
   const timer = useTimer();
   const words = useWords();
-  console.log(words);
 
   return (
     <div className={styles.container}>

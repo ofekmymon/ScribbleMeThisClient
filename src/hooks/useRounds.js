@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 
 export function useTimer() {
   const [timer, setTimer] = useState("-");
+
   useEffect(() => {
     socket.on("update-timer", (timer) => {
       setTimer(timer);
@@ -11,7 +12,7 @@ export function useTimer() {
     return () => {
       socket.off("update-timer");
     };
-  }, []);
+  }, [timer]);
 
   return timer;
 }

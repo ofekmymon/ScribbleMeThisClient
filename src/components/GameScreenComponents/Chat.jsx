@@ -34,15 +34,11 @@ export default function Chat() {
 
   useEffect(() => {
     const chat = chatRef.current;
-    console.log("chatRef.current is not null");
-
     if (!chat) {
-      console.log("chatRef.current is null");
       return;
     }
     const isBottom =
       chat.scrollHeight - chat.clientHeight <= chat.scrollTop + 150;
-    console.log(isBottom);
 
     if (isBottom) {
       chat.scrollTop = chat.scrollHeight;
