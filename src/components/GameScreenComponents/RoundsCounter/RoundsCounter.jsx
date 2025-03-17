@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import styles from "./RoundsCounter.module.css";
-import { useTimer } from "../../hooks/useRounds";
-import { socket } from "../../socket";
+import { useTimer } from "../../../hooks/useRounds";
+import { socket } from "../../../socket";
 
 export default function RoundsCounter({ round, rounds }) {
   const timer = useTimer();

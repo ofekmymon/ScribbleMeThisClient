@@ -1,14 +1,14 @@
 import { useEffect } from "react";
 import styles from "./GameScreen.module.css";
-import Players from "./GameScreenComponents/Players";
-import Chat from "./GameScreenComponents/Chat";
-import RoundsCounter from "./GameScreenComponents/RoundsCounter";
-import WordToGuess from "./GameScreenComponents/WordToGuess";
-import Canvas from "./GameScreenComponents/Canvas";
-import Words from "./GameScreenComponents/Words";
-import TurnEnded from "./GameScreenComponents/TurnEnded";
-import EndSession from "./GameScreenComponents/EndSession";
-import SetSettings from "./GameScreenComponents/SetSettings";
+import Players from "./GameScreenComponents/Players/Players";
+import Chat from "./GameScreenComponents/Chat/Chat";
+import RoundsCounter from "./GameScreenComponents/RoundsCounter/RoundsCounter";
+import WordToGuess from "./GameScreenComponents/WordToGuess/WordToGuess";
+import Canvas from "./GameScreenComponents/Canvas/Canvas";
+import Words from "./GameScreenComponents/Words/Words";
+import TurnEnded from "./GameScreenComponents/TurnEnded/TurnEnded";
+import EndSession from "./GameScreenComponents/EndSession/EndSession";
+import SetSettings from "./GameScreenComponents/SetSettings/SetSettings";
 import { useRooms, useTurnEnded, useSessionEnded } from "../hooks/useRooms";
 import { socket } from "../socket";
 

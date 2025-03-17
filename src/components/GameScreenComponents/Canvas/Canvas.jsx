@@ -6,8 +6,8 @@ import { FaEraser } from "react-icons/fa6";
 import { FaUndo } from "react-icons/fa";
 import { FaRedo } from "react-icons/fa";
 import { FaTrash } from "react-icons/fa";
-import { sendCanvas, useCanvas } from "../../hooks/useRooms";
-import { socket } from "../../socket";
+import { sendCanvas, useCanvas } from "../../../hooks/useRooms";
+import { socket } from "../../../socket";
 
 export default function Canvas({ youTurn }) {
   const [brushColor, setBrushColor] = useState("black");
@@ -95,10 +95,11 @@ export default function Canvas({ youTurn }) {
         eraserWidth={eraserValue}
         strokeColor={brushColor}
         withViewBox={true}
+        readOnly={!youTurn}
         viewBoxHeight={1500}
         viewBoxWidth={1500}
-        height="80vh" // Use viewport height
-        width="80vh" // Use viewport width
+        height="100%" // Use viewport height
+        width="100%" // Use viewport width
         className={styles.canvas}
         onStroke={async () => {
           if (youTurn) {

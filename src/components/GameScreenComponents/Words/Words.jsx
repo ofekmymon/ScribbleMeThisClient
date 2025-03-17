@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./Words.module.css";
-import { useWords, wordChosen, useTimer } from "../../hooks/useWords";
-export default function Words({ numberOfOptions }) {
+import { useWords, wordChosen, useTimer } from "../../../hooks/useWords";
+export default function Words() {
   const timer = useTimer();
   const words = useWords();
 

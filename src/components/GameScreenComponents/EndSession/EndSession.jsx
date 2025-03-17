@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./EndSession.module.css";
 import { useEffect, useState } from "react";
-import { socket } from "../../socket";
+import { socket } from "../../../socket";
 
 const SERVER_URL = process.env.REACT_APP_SERVER_URL;
 export default function EndSession() {

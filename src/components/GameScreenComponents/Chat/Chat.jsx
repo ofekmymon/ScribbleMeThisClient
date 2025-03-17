@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import styles from "./Chat.module.css";
 import { useState } from "react";
-import { socket } from "../../socket";
+import { socket } from "../../../socket";
 
 export default function Chat() {
   const [messageToSend, setMessageToSend] = useState("");

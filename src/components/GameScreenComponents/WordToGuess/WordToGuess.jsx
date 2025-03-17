@@ -1,7 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import styles from "./WordToGuess.module.css";
-import { socket } from "../../socket";
+import { socket } from "../../../socket";
 export default function WordToGuess({ word, youTurn, didGuess }) {
   const [hints, setHints] = useState([]);
 

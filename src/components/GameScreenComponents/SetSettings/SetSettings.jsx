@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styles from "./SetSettings.module.css";
-import { socket } from "../../socket";
+import { socket } from "../../../socket";
 
 export default function SetSettings({ owner, room }) {
   // Local state for form values
