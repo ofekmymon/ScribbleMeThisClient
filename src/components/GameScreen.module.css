@@ -133,3 +133,9 @@
     right: 0;
   }
 }
+
+@media (min-width: 1344px) {
+  .canvasContainer{
+    width: 69%;
+  } 
+}
